@@ -1,0 +1,22 @@
+/* Base style for the Layag/Lubog buttons */
+.bet-area button { 
+    background: #eee; 
+    color: #333; 
+    width: 45%; 
+    border: 2px solid transparent; 
+    transition: all 0.3s ease; /* Smooth transition for the shadow */
+}
+
+/* The Hover Effect you requested: Shadow Grey */
+.bet-area button:hover {
+    background: #e0e0e0; /* Slightly darker grey background */
+    box-shadow: 0 4px 8px rgba(128, 128, 128, 0.6); /* Grey shadow */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Keeps the button colored when it is selected */
+.bet-area button.active { 
+    border-color: var(--bini-teal); 
+    background: var(--bini-pink) !important; 
+    box-shadow: none; /* Removes shadow when active to focus on color */
+}

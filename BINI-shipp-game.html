@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="bini.icon" href="Bini_logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BINI Shipp Game</title>
+    <style>
+        :root { --bini-teal: #63CBD6; --bini-pink: #FFC0CB; --reset-red: #ff6b6b; }
+        body { font-family: 'Segoe UI', sans-serif; background: #fdf2f8; text-align: center; padding: 20px; color: #333; overflow-x: hidden; }
+        
+        .container { max-width: 850px; margin: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; position: relative; z-index: 1; }
+        .card { background: white; border: 3px solid var(--bini-teal); border-radius: 20px; padding: 20px; width: 360px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        h2 { color: #008080; margin-bottom: 15px; }
+        input { width: 85%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        
+        button { background: var(--bini-teal); color: white; border: none; padding: 12px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.3s; }
+        button:hover { transform: scale(1.05); filter: brightness(1.1); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+        /* Bet Buttons */
+        .bet-area button { background: #eee; color: #333; width: 45%; border: 2px solid transparent; transition: all 0.3s ease; }
+        .bet-area button:hover { background: #e0e0e0; box-shadow: 0 4px 12px rgba(128, 128, 128, 0.5); transform: translateY(-2px); }
+        .bet-area button.active { border-color: var(--bini-teal); background: var(--bini-pink) !important; box-shadow: none; }
+        
+        /* Reset Button Style */
+        .reset-btn { background: var(--reset-red); margin-top: 30px; padding: 10px 30px; font-size: 0.9rem; opacity: 0.8; }
+        .reset-btn:hover { background: #ff4747; opacity: 1; }
+
+        #shipDisplay, #betDisplay { font-size: 1.1rem; font-weight: bold; margin: 15px 0; min-height: 1.6em; }
+        .wheel-box { position: relative; display: inline-block; margin-top: 10px; }
+        .pointer { font-size: 35px; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 10; color: #333; }
+        canvas { background: white; border-radius: 50%; border: 8px solid #333; margin-top: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #finalResult { font-size: 1.4rem; font-weight: bold; margin-top: 15px; min-height: 1.5em; }
+
+        /* Win Sparkles */
+        .sparkle { position: fixed; background: radial-gradient(circle, #fff700 0%, #ffbb00 100%); border-radius: 50%; pointer-events: none; z-index: 9999; box-shadow: 0 0 10px #ffea00; animation: burst 1.2s cubic-bezier(0, .9, .57, 1) forwards; }
+        @keyframes burst { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <h1>🌸 BINI Layag o Lubog Roulette 🌸</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>💘 The Shipp</h2>
+            <input type="text" id="m1" placeholder="Bias Name">
+            <input type="text" id="m2" placeholder="Bias Wrecker Name">
+            <button onclick="confirmShip()">Confirm Names ✨</button>
+            <div id="shipDisplay">Waiting for names...</div>
+            <img src="Bini_Ship.jpeg" width="250">
+        </div>
+
+        <div class="card">
+            <h2>🎡 The Wheel of Fate</h2>
+            <div class="bet-area">
+                <button id="btnLayag" onclick="setBet('LAYAG')">LAYAG 🚢</button>
+                <button id="btnLubog" onclick="setBet('LUBOG')">LUBOG ⚓</button>
+            </div>
+            <div id="betDisplay">Place your bet!</div>
+            
+            <div class="wheel-box">
+                <div class="pointer">▼</div>
+                <canvas id="wheel" width="300" height="300"></canvas>
+            </div>
+            
+            <button id="spinBtn" disabled onclick="spinWheel()">SPIN THE WHEEL!</button>
+            <div id="finalResult"></div>
+        </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetGame()">RESET GAME 🔄</button>
+
+    <script>
+        const BINI_SHIP_NAMES = {
+            "Aiah-Colet": "ColAiah", "Aiah-Maloi": "MalAiah/Cookies", "Aiah-Gwen": "GwenAiah",
+            "Aiah-Stacey": "AiahCey/Kikayz", "Aiah-Mikha": "MikhAiah", "Aiah-Jhoanna": "JhoAiah/Lewsers",
+            "Aiah-Sheena": "SheenAiah", "Colet-Maloi": "MaColet/Uyab Nation", "Colet-Gwen": "GweLet",
+            "Colet-Stacey": "ColCey", "Colet-Mikha": "MikhOlet/Abunjingz", "Colet-Jhoanna": "JhoLet/Sweeties",
+            "Colet-Sheena": "ColShee", "Maloi-Gwen": "GweLoi", "Maloi-Stacey": "LoiCey",
+            "Maloi-Mikha": "MikhaLoi", "Maloi-Jhoanna": "JhoLoi", "Maloi-Sheena": "SheLoi",
+            "Gwen-Stacey": "GwenCey/Spiders", "Gwen-Mikha": "MikhGwen", "Gwen-Jhoanna": "GwenJho",
+            "Gwen-Sheena": "Hambebe", "Stacey-Mikha": "MikhCey", "Stacey-Jhoanna": "JhoCey",
+            "Stacey-Sheena": "SheenCey", "Mikha-Jhoanna": "MikJho/JhoMikha", "Mikha-Sheena": "MikhShee",
+            "Jhoanna-Sheena": "JhoShee"
+        };
+
+        const colors = ["#FF0000", "#FFFF00", "#8B00FF", "#FFC0CB", "#87CEEB", "#0000FF", "#FFA500", "#008000"];
+        const slices = ["LAYAG", "LUBOG", "LAYAG", "LUBOG", "LAYAG", "LUBOG", "LAYAG", "LUBOG"];
+        
+        let currentShip = "";
+        let playerBet = "";
+        let startAngle = 0;
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playWinSound() {
+            function note(freq, start, duration) {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, start);
+                gain.gain.setValueAtTime(0.1, start);
+                gain.gain.exponentialRampToValueAtTime(0.01, start + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(start);
+                osc.stop(start + duration);
+            }
+            const now = audioCtx.currentTime;
+            note(523.25, now, 0.1); note(659.25, now + 0.1, 0.1); note(783.99, now + 0.2, 0.3);
+        }
+
+        function drawWheel() {
+            const arc = Math.PI / 4; 
+            ctx.clearRect(0,0,300,300);
+            for (let i = 0; i < 8; i++) {
+                let angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i];
+                ctx.beginPath();
+                ctx.arc(150, 150, 140, angle, angle + arc, false);
+                ctx.lineTo(150, 150);
+                ctx.fill();
+                ctx.stroke();
+                ctx.save();
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                ctx.lineWidth = 3;
+                ctx.font = "bold 16px Arial";
+                ctx.translate(150 + Math.cos(angle + arc/2) * 95, 150 + Math.sin(angle + arc/2) * 95);
+                ctx.rotate(angle + arc/2 + Math.PI/2);
+                const txt = slices[i];
+                ctx.strokeText(txt, -ctx.measureText(txt).width / 2, 0);
+                ctx.fillText(txt, -ctx.measureText(txt).width / 2, 0);
+                ctx.restore();
+            }
+        }
+
+        function confirmShip() {
+            let n1 = document.getElementById('m1').value.trim();
+            let n2 = document.getElementById('m2').value.trim();
+            if(!n1 || !n2) return alert("Fill in both names!");
+            n1 = n1.charAt(0).toUpperCase() + n1.slice(1).toLowerCase();
+            n2 = n2.charAt(0).toUpperCase() + n2.slice(1).toLowerCase();
+            const key = (n1 < n2) ? `${n1}-${n2}` : `${n2}-${n1}`;
+            if(BINI_SHIP_NAMES[key]) {
+                currentShip = BINI_SHIP_NAMES[key];
+                document.getElementById('shipDisplay').innerHTML = `Official Shipp: <span style="color:#008080">${currentShip}</span>`;
+                checkReady();
+            } else {
+                document.getElementById('shipDisplay').innerText = "❌ Shipp not found.";
+            }
+        }
+
+        function setBet(val) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            playerBet = val;
+            document.getElementById('betDisplay').innerHTML = `Your Bet: <strong>${val}</strong>`;
+            document.getElementById('btnLayag').classList.toggle('active', val === 'LAYAG');
+            document.getElementById('btnLubog').classList.toggle('active', val === 'LUBOG');
+            checkReady();
+        }
+
+        function checkReady() {
+            if(currentShip && playerBet) document.getElementById('spinBtn').disabled = false;
+        }
+
+        function triggerWinEffects() {
+            playWinSound();
+            const rect = canvas.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            for(let i=0; i<50; i++) {
+                const p = document.createElement('div');
+                p.className = 'sparkle';
+                const tx = (Math.random() - 0.5) * 500;
+                const ty = (Math.random() - 0.5) * 500;
+                p.style.left = centerX + 'px'; p.style.top = centerY + 'px';
+                p.style.setProperty('--tx', tx + 'px'); p.style.setProperty('--ty', ty + 'px');
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1200);
+            }
+        }
+
+        function spinWheel() {
+            let speed = Math.random() * 0.3 + 0.5;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('finalResult').innerText = "🎰 Spinning...";
+            function animate() {
+                startAngle += speed;
+                speed *= 0.982;
+                drawWheel();
+                if(speed > 0.002) {
+                    requestAnimationFrame(animate);
+                } else {
+                    const index = Math.floor((360 - (startAngle * 180 / Math.PI % 360)) / 45) % 8;
+                    const result = slices[index];
+                    const win = result === playerBet;
+                    document.getElementById('finalResult').style.color = win ? "green" : "red";
+                    document.getElementById('finalResult').innerText = `Verdict: ${result}! ${win ? "YOU WON! 🎉" : "YOU LOST 🥹"}`;
+                    if(win) triggerWinEffects();
+                    document.getElementById('spinBtn').disabled = false;
+                }
+            }
+            animate();
+        }
+
+        function resetGame() {
+            document.getElementById('m1').value = "";
+            document.getElementById('m2').value = "";
+            document.getElementById('shipDisplay').innerText = "Waiting for names...";
+            document.getElementById('betDisplay').innerText = "Place your bet!";
+            document.getElementById('finalResult').innerText = "";
+            document.getElementById('btnLayag').classList.remove('active');
+            document.getElementById('btnLubog').classList.remove('active');
+            document.getElementById('spinBtn').disabled = true;
+            currentShip = "";
+            playerBet = "";
+            startAngle = 0;
+            drawWheel();
+        }
+
+        window.onload = drawWheel;
+    </script>
+</body>
+</html>
