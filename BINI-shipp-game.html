@@ -21,9 +21,8 @@
         /* Bet Buttons */
         .bet-area button { background: #eee; color: #333; width: 45%; border: 2px solid transparent; transition: all 0.3s ease; }
         .bet-area button:hover { background: #e0e0e0; box-shadow: 0 4px 12px rgba(128, 128, 128, 0.5); transform: translateY(-2px); }
-        .bet-area button.active { border-color: var(--bini-teal); background: var(--bini-pink) !important; box-shadow: none; }
+        .bet-area button.active { border-color: var(--bini-teal); background: var(--bini-pink) !important; box-shadow: none; color: #000; }
         
-        /* Reset Button Style */
         .reset-btn { background: var(--reset-red); margin-top: 30px; padding: 10px 30px; font-size: 0.9rem; opacity: 0.8; }
         .reset-btn:hover { background: #ff4747; opacity: 1; }
 
@@ -45,11 +44,23 @@
     <div class="container">
         <div class="card">
             <h2>💘 The Shipp</h2>
-            <input type="text" id="m1" placeholder="Bias Name">
-            <input type="text" id="m2" placeholder="Bias Wrecker Name">
+            <input type="text" id="m1" placeholder="Bias Name" list="biniMembers">
+            <input type="text" id="m2" placeholder="Bias Wrecker Name" list="biniMembers">
+            
+            <datalist id="biniMembers">
+                <option value="Aiah">
+                <option value="Colet">
+                <option value="Maloi">
+                <option value="Gwen">
+                <option value="Stacey">
+                <option value="Mikha">
+                <option value="Jhoanna">
+                <option value="Sheena">
+            </datalist>
+
             <button onclick="confirmShip()">Confirm Names ✨</button>
             <div id="shipDisplay">Waiting for names...</div>
-            <img src="Bini_Ship.jpeg" width="250">
+            <img src="Bini_Ship.jpeg" width="250" alt="Bini Members">
         </div>
 
         <div class="card">
@@ -73,20 +84,21 @@
     <button class="reset-btn" onclick="resetGame()">RESET GAME 🔄</button>
 
     <script>
+        // All 28 Unique Combinations
         const BINI_SHIP_NAMES = {
             "Aiah-Colet": "ColAiah", "Aiah-Maloi": "MalAiah/Cookies", "Aiah-Gwen": "GwenAiah",
-            "Aiah-Stacey": "AiahCey/Kikayz", "Aiah-Mikha": "MikhAiah", "Aiah-Jhoanna": "JhoAiah/Lewsers",
-            "Aiah-Sheena": "SheenAiah", "Colet-Maloi": "MaColet/Uyab Nation", "Colet-Gwen": "GweLet",
-            "Colet-Stacey": "ColCey", "Colet-Mikha": "MikhOlet/Abunjingz", "Colet-Jhoanna": "JhoLet/Sweeties",
-            "Colet-Sheena": "ColShee", "Maloi-Gwen": "GweLoi", "Maloi-Stacey": "LoiCey",
+            "Aiah-Stacey": "AiahCey/Kikayz - starphrodites/healers", "Aiah-Mikha": "MikhAiah - jellies", "Aiah-Jhoanna": "JhoAiah - Lewsers/kalinaws",
+            "Aiah-Sheena": "SheenAiah", "Colet-Maloi": "MaColet - Uyab Nation", "Colet-Gwen": "GweLet",
+            "Colet-Stacey": "ColCey", "Colet-Mikha": "MikhOlet/Abunjingz", "Colet-Jhoanna": "JhoLet / Sweeties",
+            "Colet-Sheena": "ColShee", "Maloi-Gwen": "GweLoi", "Maloi-Stacey": "LoiCey - Luckystars",
             "Maloi-Mikha": "MikhaLoi", "Maloi-Jhoanna": "JhoLoi", "Maloi-Sheena": "SheLoi",
             "Gwen-Stacey": "GwenCey/Spiders", "Gwen-Mikha": "MikhGwen", "Gwen-Jhoanna": "GwenJho",
-            "Gwen-Sheena": "Hambebe", "Stacey-Mikha": "MikhCey", "Stacey-Jhoanna": "JhoCey",
-            "Stacey-Sheena": "SheenCey", "Mikha-Jhoanna": "MikJho/JhoMikha", "Mikha-Sheena": "MikhShee",
-            "Jhoanna-Sheena": "JhoShee"
+            "Gwen-Sheena": "Hambebe - babies", "Stacey-Mikha": "MikhCey", "Stacey-Jhoanna": "JhoCey/Mahmen - Bawangs",
+            "Stacey-Sheena": "SheeCey", "Mikha-Jhoanna": "MikJho/JhoMikha - offcamz/burgerz", "Mikha-Sheena": "MikhShee",
+            "Jhoanna-Sheena": "JhoShee",  "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs", "Mikha-Stacey": "MikhCey",
         };
 
-        const colors = ["#FF0000", "#FFFF00", "#8B00FF", "#FFC0CB", "#87CEEB", "#0000FF", "#FFA500", "#008000"];
+        const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#F47174", "#FFD93D", "#6BCB77", "#4D96FF"];
         const slices = ["LAYAG", "LUBOG", "LAYAG", "LUBOG", "LAYAG", "LUBOG", "LAYAG", "LUBOG"];
         
         let currentShip = "";
@@ -97,6 +109,7 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playWinSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             function note(freq, start, duration) {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
@@ -142,15 +155,21 @@
             let n1 = document.getElementById('m1').value.trim();
             let n2 = document.getElementById('m2').value.trim();
             if(!n1 || !n2) return alert("Fill in both names!");
+            if(n1.toLowerCase() === n2.toLowerCase()) return alert("Pick two different members!");
+
+            // Normalize names
             n1 = n1.charAt(0).toUpperCase() + n1.slice(1).toLowerCase();
             n2 = n2.charAt(0).toUpperCase() + n2.slice(1).toLowerCase();
+            
+            // Sort names alphabetically to match keys in BINI_SHIP_NAMES
             const key = (n1 < n2) ? `${n1}-${n2}` : `${n2}-${n1}`;
+            
             if(BINI_SHIP_NAMES[key]) {
                 currentShip = BINI_SHIP_NAMES[key];
                 document.getElementById('shipDisplay').innerHTML = `Official Shipp: <span style="color:#008080">${currentShip}</span>`;
                 checkReady();
             } else {
-                document.getElementById('shipDisplay').innerText = "❌ Shipp not found.";
+                document.getElementById('shipDisplay').innerText = "❌ Please enter valid BINI member names.";
             }
         }
 
@@ -188,18 +207,22 @@
             let speed = Math.random() * 0.3 + 0.5;
             document.getElementById('spinBtn').disabled = true;
             document.getElementById('finalResult').innerText = "🎰 Spinning...";
+            
             function animate() {
                 startAngle += speed;
-                speed *= 0.982;
+                speed *= 0.985;
                 drawWheel();
                 if(speed > 0.002) {
                     requestAnimationFrame(animate);
                 } else {
-                    const index = Math.floor((360 - (startAngle * 180 / Math.PI % 360)) / 45) % 8;
+                    // Logic to find which slice the pointer is on
+                    const degrees = (startAngle * 180 / Math.PI) % 360;
+                    const index = Math.floor((360 - (degrees - 90) % 360) % 360 / 45);
                     const result = slices[index];
+                    
                     const win = result === playerBet;
                     document.getElementById('finalResult').style.color = win ? "green" : "red";
-                    document.getElementById('finalResult').innerText = `Verdict: ${result}! ${win ? "YOU WON! 🎉" : "YOU LOST 🥹"}`;
+                    document.getElementById('finalResult').innerText = `RESULT: ${result}! ${win ? "YOU WON! 🎉" : "YOU LOST 🥹"}`;
                     if(win) triggerWinEffects();
                     document.getElementById('spinBtn').disabled = false;
                 }
