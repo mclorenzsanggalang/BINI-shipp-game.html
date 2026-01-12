@@ -84,18 +84,41 @@
     <button class="reset-btn" onclick="resetGame()">RESET GAME 🔄</button>
 
     <script>
-        // All 28 Unique Combinations
+        // All 56 Combinations
         const BINI_SHIP_NAMES = {
-            "Aiah-Colet": "ColAiah", "Aiah-Maloi": "MalAiah/Cookies", "Aiah-Gwen": "GwenAiah",
-            "Aiah-Stacey": "AiahCey/Kikayz - starphrodites/healers", "Aiah-Mikha": "MikhAiah - jellies", "Aiah-Jhoanna": "JhoAiah - Lewsers/kalinaws",
-            "Aiah-Sheena": "SheenAiah", "Colet-Maloi": "MaColet - Uyab Nation", "Colet-Gwen": "GweLet",
-            "Colet-Stacey": "ColCey", "Colet-Mikha": "MikhOlet/Abunjingz", "Colet-Jhoanna": "JhoLet / Sweeties",
-            "Colet-Sheena": "ColShee", "Maloi-Gwen": "GweLoi", "Maloi-Stacey": "LoiCey - Luckystars",
-            "Maloi-Mikha": "MikhaLoi", "Maloi-Jhoanna": "JhoLoi", "Maloi-Sheena": "SheLoi",
-            "Gwen-Stacey": "GwenCey/Spiders", "Gwen-Mikha": "MikhGwen", "Gwen-Jhoanna": "GwenJho",
-            "Gwen-Sheena": "Hambebe - babies", "Stacey-Mikha": "MikhCey", "Stacey-Jhoanna": "JhoCey/Mahmen - Bawangs",
-            "Stacey-Sheena": "SheeCey", "Mikha-Jhoanna": "MikJho/JhoMikha - offcamz/burgerz", "Mikha-Sheena": "MikhShee",
-            "Jhoanna-Sheena": "JhoShee",  "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs", "Mikha-Stacey": "MikhCey", "Jhoanna-Mikha": "MikJho/JhoMikha",
+            "Aiah-Stacey": "AiahCey/Kikayz/starphrodites/healers", "Aiah-Maloi": "MalAiah - Cookies",
+            "Aiah-Jhoanna": "JhoAiah - Lewsers/Kalinaws", "Aiah-Gwen": "GwenAiah",
+            "Aiah-Colet": "ColAiah - Ramenz", "Aiah-Sheena": "SheenAiah", "Aiah-Mikha": "MikhAiah - jellies",
+
+            "Stacey-Maloi": "LoiCey - Luckystars", "Stacey-Jhoanna": "JhoCey/Mahmen - Bawangs",
+            "Stacey-Gwen": "GwenCey - Spiders", "Stacey-Colet": "ColCey - Bare Minimum", 
+            "Stacey-Sheena": "SheeCey", "Stacey-Mikha": "MikhCey",
+            "Stacey-Aiah": "AiahCey/Kikayz/starphrodites/healers",
+
+            "Maloi-Jhoanna": "LuckyTin/Wifiz", "Maloi-Gwen": "GweLoi", "Maloi-Colet": "MaColet - Uyab Nation",
+            "Maloi-Sheena": "SheeLoi", "Maloi-Mikha": "MikhaLoi", "Maloi-Aiah": "MalAiah - Cookies",
+            "Maloi-Stacey": "LoiCey - Luckystars",
+
+            "Jhoanna-Gwen": "JhoGwen", "Jhoanna-Colet": "JhoLet - Sweeties", "Jhoanna-Sheena": "JhoShee",
+            "Jhoanna-Mikha": "MikJho/JhoMikha", "Jhoanna-Maloi": "LuckyTin/Wifiz",
+            "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs", "Jhoanna-Aiah": "JhoAiah - Lewsers/kalinaws",
+
+            "Gwen-Colet": "Gwelet", "Gwen-Sheena": "Hambebe - babies", "Gwen-Mikha": "MikhGwen",
+            "Gwen-Aiah": "GwenAiah", "Gwen-Stacey": "GwenCey - Spiders","Gwen-Maloi": "GweLoi",
+            "Gwen-Jhoanna": "JhoGwen",
+
+            "Colet-Sheena": "ColShee", "Colet-Mikha": "MikhOlet/Abunjingz - Cocalites",
+            "Colet-Aiah": "ColAiah - Ramenz", "Colet-Stacey": "ColCey/Bare Minimum",
+            "Colet-Maloi": "MaColet - Uyab Nation", "Colet-Jhoanna": "JhoLet - Sweeties", 
+            "Colet-Gwen": "Gwelet",
+
+            "Sheena-Mikha": "MikhShee", "Sheena-Aiah": "SheenAiah", "Sheena-Stacey": "SheeCey",
+            "Sheena-Maloi": "SheeLoi", "Sheena-Jhoanna": "Jhoshee", "Sheena-Gwen": "Hambebe - babies",
+            "Sheena-Colet": "ColShee",
+
+            "Mikha-Aiah": "MikhAiah - jellies", "Mikha-Stacey": "MikhCey", "Mikha-Maloi": "MikhaLoi",
+            "Mikha-Jhoanna": "MikJho/JhoMikha/offcamz/burgerz", "Mikha-Gwen": "MikhGwen",
+            "Mikha-Colet": "MikhOlet/Abunjingz - Cocalites", "Mikha-Sheena": "MikhShee"
         };
 
         const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#F47174", "#FFD93D", "#6BCB77", "#4D96FF"];
