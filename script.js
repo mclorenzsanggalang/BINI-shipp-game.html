@@ -1,76 +1,82 @@
 // --- YOUR C++ DATA TRANSLATED ---
 const BINI_SHIP_NAMES = {
     // Aiah pairings
-    "Aiah-Stacey": "AiahCey/Kikayz",
-    "Aiah-Maloi": "MalAiah/Cookies",
-    "Aiah-Jhoanna": "JhoAiah/Lewsers",
+    "Aiah-Stacey": "AiahCey/Kikayz/starphrodites/healers",
+    "Aiah-Maloi": "MalAiah - Cookies",
+    "Aiah-Jhoanna": "JhoAiah - Lewsers/Kalinaws",
     "Aiah-Gwen": "GwenAiah",
-    "Aiah-Colet": "ColAiah/Ramenz",
+    "Aiah-Colet": "ColAiah - Ramenz",
     "Aiah-Sheena": "SheenAiah",
-    "Aiah-Mikha": "MikhAiah",
+    "Aiah-Mikha": "MikhAiah - jellies",
 
     // Stacey pairings
-    "Maloi-Stacey": "LoiCey/Luckystars",
-    "Jhoanna-Stacey": "JhoCey/Bawangs",
-    "Gwen-Stacey": "GwenCey/Spiders",
-    "Colet-Stacey": "ColCey/Bare Minimum",
-    "Sheena-Stacey": "SheeCey",
-    "Mikha-Stacey": "MikhCey",
-    "Aiah-Stacey": "AiahCey/Kikayz",
+    "Stacey-Maloi": "LoiCey - Luckystars",
+    "Stacey-Jhoanna": "JhoCey/Mahmen - Bawangs",
+    "Stacey-Gwen": "GwenCey - Spiders",
+    "Stacey-Colet": "ColCey - Bare Minimum",
+    "Stacey-Sheena": "SheeCey",
+    "Stacey-Mikha": "MikhCey",
+
+    "Stacey-Aiah": "AiahCey/Kikayz/starphrodites/healers",
 
     // Maloi pairings
-    "Jhoanna-Maloi": "LuckyTin/Wifiz",
-    "Gwen-Maloi": "GweLoi",
-    "Colet-Maloi": "MaColet/Uyab Nation",
+    "Maloi-Jhoanna": "LuckyTin/Wifiz",
+    "Maloi-Gwen": "GweLoi",
+    "Maloi-Colet": "MaColet - Uyab Nation",
     "Maloi-Sheena": "SheeLoi",
     "Maloi-Mikha": "MikhaLoi",
-    "Aiah-Maloi": "MalAiah/Cookies",
-    "Maloi-Stacey": "LoiCey/Luckystars",
+
+    "Maloi-Aiah": "MalAiah - Cookies",
+    "Maloi-Stacey": "LoiCey - Luckystars",
 
     // Jhoanna pairings
-    "Gwen-Jhoanna": "JhoGwen",
-    "Colet-Jhoanna": "JhoLet/Sweeties",
+    "Jhoanna-Gwen": "JhoGwen",
+    "Jhoanna-Colet": "JhoLet - Sweeties",
     "Jhoanna-Sheena": "JhoShee",
     "Jhoanna-Mikha": "MikJho/JhoMikha",
+
     "Jhoanna-Maloi": "LuckyTin/Wifiz",
-    "Jhoanna-Stacey": "JhoCey/Bawangs",
-    "Aiah-Jhoanna": "JhoAiah/Lewsers",
+    "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs",
+    "Jhoanna-Aiah": "JhoAiah - Lewsers/Kalinaws",
 
     // Gwen pairings
-    "Colet-Gwen": "Gwelet",
-    "Gwen-Sheena": "Hambebe",
+    "Gwen-Colet": "Gwelet",
+    "Gwen-Sheena": "Hambebe - babies",
     "Gwen-Mikha": "MikhGwen",
-    "Aiah-Gwen": "GwenAiah",
-    "Gwen-Stacey": "GwenCey/Spiders",
+
+    "Gwen-Aiah": "GwenAiah",
+    "Gwen-Stacey": "GwenCey - Spiders",
     "Gwen-Maloi": "GweLoi",
     "Gwen-Jhoanna": "JhoGwen",
 
     // Colet pairings
     "Colet-Sheena": "ColShee",
-    "Colet-Mikha": "MikhOlet/Abunjingz",
-    "Aiah-Colet": "ColAiah/Ramenz",
+    "Colet-Mikha": "MikhOlet/Abunjingz - Cocalites",
+
+    "Colet-Aiah": "ColAiah - Ramenz",
     "Colet-Stacey": "ColCey/Bare Minimum",
-    "Colet-Maloi": "MaColet/Uyab Nation",
-    "Colet-Jhoanna": "JhoLet/Sweeties",
+    "Colet-Maloi": "MaColet - Uyab Nation",
+    "Colet-Jhoanna": "JhoLet - Sweeties",
     "Colet-Gwen": "Gwelet",
 
     // Sheena pairings
-    "Mikha-Sheena": "MikhShee",
-    "Aiah-Sheena": "SheenAiah",
+    "Sheena-Mikha": "MikhShee",
+
+    "Sheena-Aiah": "SheenAiah",
     "Sheena-Stacey": "SheeCey",
-    "Maloi-Sheena": "SheeLoi",
-    "Jhoanna-Sheena": "Jhoshee",
-    "Gwen-Sheena": "Hambebe",
-    "Colet-Sheena": "ColShee",
+    "Sheena-Maloi": "SheeLoi",
+    "Sheena-Jhoanna": "Jhoshee",
+    "Sheena-Gwen": "Hambebe - babies",
+    "Sheena-Colet": "ColShee",
 
     // Mikha pairings
-    "Aiah-Mikha": "MikhAiah",
+    "Mikha-Aiah": "MikhAiah - jellies",
     "Mikha-Stacey": "MikhCey",
-    "Maloi-Mikha": "MikhaLoi",
-    "Jhoanna-Mikha": "MikJho/JhoMikha",
-    "Gwen-Mikha": "MikhGwen",
-    "Colet-Mikha": "MikhOlet/Abunjingz",
-    "Mikha-Sheena": "MikhShee",
+    "Mikha-Maloi": "MikhaLoi",
+    "Mikha-Jhoanna": "MikJho/JhoMikha/offcamz/burgerz",
+    "Mikha-Gwen": "MikhGwen",
+    "Mikha-Colet": "MikhOlet/Abunjingz - Cocalites",
+    "Mikha-Sheena": "MikhShee"
     
 };
 let currentShip = "";
