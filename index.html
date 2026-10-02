@@ -84,41 +84,42 @@
     <button class="reset-btn" onclick="resetGame()">RESET GAME 🔄</button>
 
     <script>
-        // All 56 Combinations
+        // All 56 Combinations, Store each pair only once (alphabetical key order: "Aiah" < "Colet" < "Gwen" < "Jhoanna" < "Maloi" < "Mikha" < "Sheena" < "Stacey")
         const BINI_SHIP_NAMES = {
-            "Aiah-Stacey": "AiahCey/Kikayz/starphrodites/healers", "Aiah-Maloi": "MalAiah - Cookies",
-            "Aiah-Jhoanna": "JhoAiah - Lewsers/Kalinaws", "Aiah-Gwen": "GwenAiah",
-            "Aiah-Colet": "ColAiah - Ramenz", "Aiah-Sheena": "SheenAiah", "Aiah-Mikha": "MikhAiah - jellies",
+           "Aiah-Colet": "ColAiah - Ramenz",
+           "Aiah-Gwen" : "GwenAiah",
+           "Aiah-Jhoanna": "JhoAiah - Lewser/Kalinaws",
+           "Aiah-Maloi": "MalAiah - Cookies",
+           "Aiah-Mikha": "MikhAiah - Jellies",
+           "Aiah-Sheena": "SheenAiah",
+           "Aiah-Stacey": "AiahCey/Kikayz/Starphrodite/healers",
 
-            "Stacey-Maloi": "LoiCey - Luckystars", "Stacey-Jhoanna": "JhoCey/Mahmen - Bawangs",
-            "Stacey-Gwen": "GwenCey - Spiders", "Stacey-Colet": "ColCey - Bare Minimum", 
-            "Stacey-Sheena": "SheeCey", "Stacey-Mikha": "MikhCey",
-            "Stacey-Aiah": "AiahCey/Kikayz/starphrodites/healers",
+           "Colet-Gwen": "Gwelet",
+           "Colet-Jhoanna": "Jholet - Sweeties",
+           "Colet-Maloi": "MaColet - Uyab Nation",
+           "Colet-Mikha": "MikhOlet/Abunjingz - Cocalites",
+           "Colet-Sheena": "Colshee",
+           "Colet-Stacey": "ColCey - Bare Minimum",
 
-            "Maloi-Jhoanna": "LuckyTin/Wifiz", "Maloi-Gwen": "GweLoi", "Maloi-Colet": "MaColet - Uyab Nation",
-            "Maloi-Sheena": "SheeLoi", "Maloi-Mikha": "MikhaLoi", "Maloi-Aiah": "MalAiah - Cookies",
-            "Maloi-Stacey": "LoiCey - Luckystars",
+           "Gwen-Jhoanna": "JhoGwen",
+           "Gwen-Maloi": "GweLoi",
+           "Gwen-Mikha": "MikGwen",
+           "Gwen-Sheena": "Hambebe - Babies",
+           "Gwen-Stacey": "GwenCey - Spiders",
 
-            "Jhoanna-Gwen": "JhoGwen", "Jhoanna-Colet": "JhoLet - Sweeties", "Jhoanna-Sheena": "JhoShee",
-            "Jhoanna-Mikha": "MikJho/JhoMikha", "Jhoanna-Maloi": "LuckyTin/Wifiz",
-            "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs", "Jhoanna-Aiah": "JhoAiah - Lewsers/kalinaws",
+           "Jhoanna-Maloi": "LuckyTin/Wifiz",
+           "Jhoanna-Mikha": "MikJho/JhoMikha/Offcamz/Burgerz",
+           "Jhoanna-Sheena": "JhoShee",
+           "Jhoanna-Stacey": "JhoCey/Mahmen - Bawangs",
 
-            "Gwen-Colet": "Gwelet", "Gwen-Sheena": "Hambebe - babies", "Gwen-Mikha": "MikhGwen",
-            "Gwen-Aiah": "GwenAiah", "Gwen-Stacey": "GwenCey - Spiders","Gwen-Maloi": "GweLoi",
-            "Gwen-Jhoanna": "JhoGwen",
+           "Maloi-Mikha": "MikhaLoi",
+           "Maloi-Sheena": "Sheeloi",
+           "Maloi-Stacey": "LoiCey - Luckystars",
 
-            "Colet-Sheena": "ColShee", "Colet-Mikha": "MikhOlet/Abunjingz - Cocalites",
-            "Colet-Aiah": "ColAiah - Ramenz", "Colet-Stacey": "ColCey/Bare Minimum",
-            "Colet-Maloi": "MaColet - Uyab Nation", "Colet-Jhoanna": "JhoLet - Sweeties", 
-            "Colet-Gwen": "Gwelet",
+           "Mikha-Sheena": "MikShee",
+           "Mikha-Stacey": "MikCey",
 
-            "Sheena-Mikha": "MikhShee", "Sheena-Aiah": "SheenAiah", "Sheena-Stacey": "SheeCey",
-            "Sheena-Maloi": "SheeLoi", "Sheena-Jhoanna": "Jhoshee", "Sheena-Gwen": "Hambebe - babies",
-            "Sheena-Colet": "ColShee",
-
-            "Mikha-Aiah": "MikhAiah - jellies", "Mikha-Stacey": "MikhCey", "Mikha-Maloi": "MikhaLoi",
-            "Mikha-Jhoanna": "MikJho/JhoMikha/offcamz/burgerz", "Mikha-Gwen": "MikhGwen",
-            "Mikha-Colet": "MikhOlet/Abunjingz - Cocalites", "Mikha-Sheena": "MikhShee"
+           "Sheena-Stacey": "SheeCey"
         };
 
         const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#F47174", "#FFD93D", "#6BCB77", "#4D96FF"];
